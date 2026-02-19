@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://www.melissavipmagic.com/</loc>
+    <lastmod>2024-02-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.melissavipmagic.com/images/melissa-portrait.jpg</image:loc>
+      <image:title>Melissa Jiles - Authorized Disney Vacation Planner</image:title>
+      <image:caption>Melissa Jiles, Disney travel expert with 13+ years experience</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.melissavipmagic.com/images/service-parks.jpg</image:loc>
+      <image:title>Walt Disney World Magic Kingdom</image:title>
+      <image:caption>Cinderella Castle at Magic Kingdom</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.melissavipmagic.com/images/service-cruise.jpg</image:loc>
+      <image:title>Disney Cruise Line</image:title>
+      <image:caption>Disney cruise ship at sunset</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- Services Section (Anchor) -->
+  <url>
+    <loc>https://www.melissavipmagic.com/#services</loc>
+    <lastmod>2024-02-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Destinations Section (Anchor) -->
+  <url>
+    <loc>https://www.melissavipmagic.com/#destinations</loc>
+    <lastmod>2024-02-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- About Section (Anchor) -->
+  <url>
+    <loc>https://www.melissavipmagic.com/#about</loc>
+    <lastmod>2024-02-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Contact Section (Anchor) -->
+  <url>
+    <loc>https://www.melissavipmagic.com/#contact</loc>
+    <lastmod>2024-02-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- How It Works Section (Anchor) -->
+  <url>
+    <loc>https://www.melissavipmagic.com/#how-it-works</loc>
+    <lastmod>2024-02-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- FAQ Section (Anchor) -->
+  <url>
+    <loc>https://www.melissavipmagic.com/#faq</loc>
+    <lastmod>2024-02-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Video Gallery with Video Sitemap entries -->
+  <url>
+    <loc>https://www.melissavipmagic.com/#videos</loc>
+    <lastmod>2024-02-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://img.youtube.com/vi/cNAYhwnhZ4o/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>Disney Dream Concierge Lounge Tour</video:title>
+      <video:description>A complete tour of the Disney Dream Concierge Lounge with Melissa VIP Magic.</video:description>
+      <video:content_loc>https://www.youtube.com/watch?v=cNAYhwnhZ4o</video:content_loc>
+      <video:duration>482</video:duration>
+      <video:publication_date>2023-01-15</video:publication_date>
+      <video:tag>Disney Cruise</video:tag>
+      <video:tag>Concierge</video:tag>
+      <video:tag>Disney Dream</video:tag>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://img.youtube.com/vi/x16kyarCj84/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>Disney's Best Kept Secret</video:title>
+      <video:description>Discover Disney's best kept secret for an amazing vacation experience.</video:description>
+      <video:content_loc>https://www.youtube.com/watch?v=x16kyarCj84</video:content_loc>
+      <video:duration>24</video:duration>
+      <video:publication_date>2023-01-15</video:publication_date>
+    </video:video>
+  </url>
+  
+</urlset>
