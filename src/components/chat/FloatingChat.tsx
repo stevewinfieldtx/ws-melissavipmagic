@@ -5,7 +5,7 @@ import { ChatBubble, TypingIndicator } from './ChatBubble'
 import { sendChatMessage } from './chatService'
 import type { ChatMessage } from './types'
 
-const WELCOME_MESSAGE = "Hey there! Welcome to Melissa VIP Magic! I'm so excited you're here. Are you dreaming about a Disney vacation, or are you already planning one? I'd love to help you figure out the perfect experience!"
+const WELCOME_MESSAGE = "Hey! Are you planning a Disney trip, or still in the dreaming phase?"
 
 interface FloatingChatProps {
   guideName?: string
@@ -58,12 +58,12 @@ export function FloatingChat({
     }
   }, [isOpen, isInitialized])
 
-  // Focus input when chat opens
+  // Focus input when chat opens AND after every message
   useEffect(() => {
-    if (isOpen && isInitialized) {
-      setTimeout(() => inputRef.current?.focus(), 100)
+    if (isOpen && isInitialized && !isLoading) {
+      setTimeout(() => inputRef.current?.focus(), 50)
     }
-  }, [isOpen, isInitialized])
+  }, [isOpen, isInitialized, isLoading, messages])
 
   // Stop pulse after first open
   useEffect(() => {
@@ -102,12 +102,11 @@ export function FloatingChat({
       setMessages(prev => [...prev, {
         id: `error-${Date.now()}`,
         role: 'assistant',
-        content: "Oh my goodness, I'm having a little technical hiccup! Could you try that again? I don't want to miss a thing you're telling me!",
+        content: "Sorry, something glitched on my end. Mind trying that again?",
         timestamp: new Date()
       }])
     } finally {
       setIsLoading(false)
-      inputRef.current?.focus()
     }
   }, [inputValue, isLoading, messages, apiKey, modelId])
 
