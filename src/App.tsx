@@ -1309,7 +1309,7 @@ function Hero() {
       
       {/* Content */}
       <div ref={contentRef} className="relative z-40 h-full flex flex-col items-center justify-center px-6">
-        <h1 className="hero-title text-5xl md:text-7xl lg:text-8xl font-bold text-white text-center mb-6" style={{ fontFamily: 'Cinzel, serif' }} itemProp="headline">
+        <h1 className="hero-title text-4xl md:text-6xl lg:text-7xl font-bold text-white text-center mb-6 whitespace-nowrap" style={{ fontFamily: 'Cinzel, serif' }} itemProp="headline">
           {'Where the Magic Begins'.split('').map((char, i) => (
             <span key={i} className="inline-block">{char === ' ' ? '\u00A0' : char}</span>
           ))}
