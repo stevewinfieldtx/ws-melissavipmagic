@@ -51,46 +51,63 @@ export async function sendChatMessage(
   return answer
 }
 
-export async function extractLeadSummary(
-  messages: ChatMessage[],
-  apiKey: string,
-  modelId: string = 'openai/gpt-4o-mini'
-): Promise<LeadData> {
+const LEAD_API_URL = 'https://web-production-b295.up.railway.app/api/lead/melissavipmagic'
+
+/**
+ * Send lead data to server for storage + email notification to Melissa.
+ * Works for both chat conversations and Q&A interactions.
+ */
+export async function captureLead(leadData: Record<string, string | undefined>): Promise<void> {
+  try {
+    await fetch(LEAD_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(leadData),
+    })
+  } catch (err) {
+    console.error('Lead capture failed:', err)
+  }
+}
+
+/**
+ * Extract lead info from chat conversation using the LLM, then send to server.
+ */
+export async function extractAndCaptureLead(messages: ChatMessage[]): Promise<void> {
   const conversationText = messages
-    .map(msg => (msg.role === 'user' ? 'Guest' : 'Melissa AI') + ': ' + msg.content)
+    .map(msg => (msg.role === 'user' ? 'Guest' : 'Melissa') + ': ' + msg.content)
     .join('\n')
 
-  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + apiKey,
-      'HTTP-Referer': window.location.origin,
-      'X-Title': 'Disney VIP Lead Extract'
-    },
-    body: JSON.stringify({
-      model: modelId,
-      messages: [
-        {
-          role: 'system',
-          content: 'Extract lead information from this Disney vacation planning conversation. Return ONLY valid JSON with these fields (use null for unknown): name, email, phone, partyComposition, travelDates, destination, budget, specialOccasion, experiencePreferences, previousDisneyExperience, priorities, summary (a 2-3 sentence brief for the travel agent).'
-        },
-        { role: 'user', content: conversationText }
-      ],
-      temperature: 0.1,
-      max_tokens: 500
-    })
-  })
-
-  if (!response.ok) throw new Error('Failed to extract lead')
-
-  const data = await response.json()
-  const text = data.choices?.[0]?.message?.content || '{}'
+  // Use the RAG endpoint itself to extract lead data (no separate API key needed)
+  const extractPrompt = `Extract lead info from this conversation. Return ONLY valid JSON with these fields (null if unknown): name, email, phone, party_composition, travel_dates, destination, budget, special_occasion, experience_prefs, previous_experience, priorities, summary (2-3 sentence brief for the travel agent), next_steps (what to discuss on the follow-up call: specific topics, unanswered questions, concerns raised, what excited them most, and what to recommend based on what they shared).\n\nConversation:\n${conversationText}`
 
   try {
-    const cleaned = text.replace(/```json|```/g, '').trim()
-    return JSON.parse(cleaned)
-  } catch {
-    return { summary: text }
+    const response = await fetch('https://web-production-b295.up.railway.app/api/chat/melissavipmagic', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question: extractPrompt }),
+    })
+    const data = await response.json()
+    const text = data.answer || '{}'
+
+    let leadData: Record<string, string>
+    try {
+      const cleaned = text.replace(/```json|```/g, '').trim()
+      leadData = JSON.parse(cleaned)
+    } catch {
+      leadData = { summary: text }
+    }
+
+    // Add conversation and source
+    leadData.conversation = conversationText
+    leadData.source = 'chat'
+
+    await captureLead(leadData)
+  } catch (err) {
+    // Fallback: save raw conversation even if extraction fails
+    await captureLead({
+      source: 'chat',
+      conversation: conversationText,
+      summary: 'Lead extraction failed — raw conversation saved',
+    })
   }
 }

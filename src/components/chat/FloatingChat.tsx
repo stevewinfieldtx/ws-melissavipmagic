@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { MessageCircle, X, Send, Sparkles } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { ChatBubble, TypingIndicator } from './ChatBubble'
-import { sendChatMessage } from './chatService'
+import { sendChatMessage, extractAndCaptureLead } from './chatService'
 import type { ChatMessage } from './types'
 
 const WELCOME_MESSAGE = "Hey! Are you planning a Disney trip, or still in the dreaming phase?"
@@ -34,6 +34,7 @@ export function FloatingChat({
   const [isLoading, setIsLoading] = useState(false)
   const [isInitialized, setIsInitialized] = useState(false)
   const [showPulse, setShowPulse] = useState(true)
+  const leadCaptured = useRef(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -106,6 +107,12 @@ export function FloatingChat({
         timestamp: new Date()
       }])
     } finally {
+      // Auto-capture lead after 6+ user messages (enough info gathered)
+      const userMsgCount = [...messages, userMsg].filter(m => m.role === 'user').length
+      if (userMsgCount >= 6 && !leadCaptured.current) {
+        leadCaptured.current = true
+        extractAndCaptureLead([...messages, userMsg]).catch(() => {})
+      }
       setIsLoading(false)
     }
   }, [inputValue, isLoading, messages, apiKey, modelId])

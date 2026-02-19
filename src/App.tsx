@@ -1501,29 +1501,26 @@ function Testimonials() {
   );
 }
 
-// Video Gallery Section
+// Video Gallery Section — Featured hero + sidebar
 function VideoGallery() {
-  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+  const [activeVideo, setActiveVideo] = useState(youtubeVideos[0]);
   const sectionRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo('.video-card',
-        { y: 50, opacity: 0 },
-        { 
-          y: 0, 
-          opacity: 1, 
-          duration: 0.6, 
-          stagger: 0.15,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
-          }
+      gsap.fromTo('.video-hero',
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out',
+          scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' }
+        }
+      );
+      gsap.fromTo('.video-thumb',
+        { x: 30, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: 'power2.out',
+          scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' }
         }
       );
     }, sectionRef);
-    
     return () => ctx.revert();
   }, []);
   
@@ -1535,60 +1532,257 @@ function VideoGallery() {
             See the Magic
           </h2>
           <p className="text-lg text-white/70">
-            Watch moments from magical vacations
+            Real tours, real reviews, real Disney experiences
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {youtubeVideos.map((video, index) => (
-            <div
-              key={index}
-              onClick={() => setSelectedVideo(video.id)}
-              className="video-card group relative aspect-video rounded-2xl overflow-hidden cursor-pointer"
-              role="button"
-              tabIndex={0}
-              aria-label={`Play video: ${video.title}`}
-              onKeyDown={(e) => e.key === 'Enter' && setSelectedVideo(video.id)}
-            >
-              <img
-                src={`https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`}
-                alt={`YouTube video thumbnail: ${video.title} - Click to watch`}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 rounded-full bg-[#F5A623] flex items-center justify-center transform group-hover:scale-110 transition-transform magic-glow-pulse">
-                  <Play className="w-8 h-8 text-white ml-1" fill="white" />
-                </div>
-              </div>
-              <div className="absolute bottom-4 left-4 right-4">
-                <h3 className="text-white font-semibold text-sm line-clamp-2">{video.title}</h3>
-                <span className="text-white/70 text-xs">{video.duration}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      
-      <Dialog open={!!selectedVideo} onOpenChange={() => setSelectedVideo(null)}>
-        <DialogContent className="max-w-4xl p-0 bg-black border-none">
-          <DialogTitle className="sr-only">Video Player</DialogTitle>
-          {selectedVideo && (
-            <div className="aspect-video">
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Featured Video */}
+          <div className="video-hero flex-1">
+            <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl">
               <iframe
                 width="100%"
                 height="100%"
-                src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1`}
-                title="YouTube video player"
+                src={`https://www.youtube.com/embed/${activeVideo.id}`}
+                title={activeVideo.title}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
             </div>
+            <h3 className="text-white font-semibold text-lg mt-4" style={{ fontFamily: 'Cinzel, serif' }}>
+              {activeVideo.title}
+            </h3>
+            <p className="text-white/50 text-sm">{activeVideo.duration}</p>
+          </div>
+          
+          {/* Sidebar Playlist */}
+          <div className="lg:w-80 flex flex-row lg:flex-col gap-3 overflow-x-auto lg:overflow-x-visible lg:overflow-y-auto lg:max-h-[420px] pb-2 lg:pb-0">
+            {youtubeVideos.map((video, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveVideo(video)}
+                className={`video-thumb flex-shrink-0 w-60 lg:w-full flex items-center gap-3 p-2 rounded-xl transition-all ${
+                  activeVideo.id === video.id
+                    ? 'bg-[#F5A623]/20 ring-2 ring-[#F5A623]'
+                    : 'bg-white/5 hover:bg-white/10'
+                }`}
+              >
+                <div className="relative w-28 flex-shrink-0 aspect-video rounded-lg overflow-hidden">
+                  <img
+                    src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}
+                    alt={video.title}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Play className="w-6 h-6 text-white drop-shadow-lg" fill="white" />
+                  </div>
+                </div>
+                <div className="text-left min-w-0">
+                  <p className="text-white text-sm font-medium line-clamp-2">{video.title}</p>
+                  <span className="text-white/50 text-xs">{video.duration}</span>
+                </div>
+              </button>
+            ))}
+            
+            {/* YouTube CTA */}
+            <a
+              href="https://www.youtube.com/@MelissaVIPMagic"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-shrink-0 flex items-center justify-center gap-2 p-3 rounded-xl bg-red-600 hover:bg-red-700 transition-colors text-white font-semibold text-sm"
+            >
+              <Youtube className="w-5 h-5" />
+              Watch More on YouTube
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Ask Melissa Q&A Section
+function AskMelissa() {
+  const [question, setQuestion] = useState('');
+  const [email, setEmail] = useState('');
+  const [emailSubmitted, setEmailSubmitted] = useState(false);
+  const [answer, setAnswer] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasAsked, setHasAsked] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  
+  const sampleQuestions = [
+    'What resort is best for a family with toddlers?',
+    'Is the Disney Cruise worth the price?',
+    'When is the best time to visit Disney World?',
+    'What are the best dining experiences at Disney?',
+  ];
+  
+  const askQuestion = async (q: string) => {
+    if (!q.trim() || isLoading || !emailSubmitted) return;
+    setIsLoading(true);
+    setHasAsked(true);
+    setAnswer('');
+    
+    try {
+      const response = await fetch('https://web-production-b295.up.railway.app/api/chat/melissavipmagic', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: q.trim() }),
+      });
+      const data = await response.json();
+      const ans = data.answer || 'Hmm, I couldn\'t come up with an answer for that. Try asking something else!';
+      setAnswer(ans);
+      // Log Q&A interaction to lead system
+      fetch('https://web-production-b295.up.railway.app/api/lead/melissavipmagic', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ source: 'qa', question: q.trim(), answer: ans, email }),
+      }).catch(() => {});
+    } catch {
+      setAnswer('Sorry, something went wrong. Try again in a sec.');
+    } finally {
+      setIsLoading(false);
+      inputRef.current?.focus();
+    }
+  };
+  
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo('.qa-container',
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out',
+          scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' }
+        }
+      );
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+  
+  return (
+    <section ref={sectionRef} className="py-24 px-6 bg-gradient-to-br from-[#f8f4fc] via-white to-[#fff0f7]">
+      <div className="max-w-3xl mx-auto">
+        <div className="text-center mb-10">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 gradient-text" style={{ fontFamily: 'Cinzel, serif' }}>
+            Ask Melissa
+          </h2>
+          <p className="text-lg text-gray-600">
+            Got a Disney question? Ask away — I've been there, done that, and have opinions.
+          </p>
+        </div>
+        
+        <div className="qa-container bg-white rounded-3xl p-8 shadow-xl">
+          {/* Email Gate */}
+          {!emailSubmitted ? (
+            <div>
+              <p className="text-gray-600 text-sm mb-4">Drop your email and I'll answer any Disney question you've got. Plus I can follow up if you want help planning.</p>
+              <div className="flex gap-3">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && email.includes('@') && setEmailSubmitted(true)}
+                  placeholder="your@email.com"
+                  className="flex-1 rounded-full border border-gray-200 px-5 py-3 text-sm focus:outline-none focus:border-purple-300 focus:ring-2 focus:ring-purple-200/50"
+                />
+                <button
+                  onClick={() => email.includes('@') && setEmailSubmitted(true)}
+                  disabled={!email.includes('@')}
+                  className="rounded-full px-6 py-3 text-white font-semibold text-sm transition-all hover:scale-105 active:scale-95 disabled:opacity-40"
+                  style={{ background: 'linear-gradient(135deg, #7B2D8E 0%, #E91E8C 100%)' }}
+                >
+                  Let's Go
+                </button>
+              </div>
+              <p className="text-xs text-gray-400 mt-2">No spam, ever. Just Disney expertise.</p>
+            </div>
+          ) : (
+            <>
+          {/* Question Input */}
+          <div className="flex gap-3 mb-6">
+            <input
+              ref={inputRef}
+              type="text"
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && askQuestion(question)}
+              placeholder="Ask me anything about Disney vacations..."
+              className="flex-1 rounded-full border border-gray-200 px-5 py-3 text-sm focus:outline-none focus:border-purple-300 focus:ring-2 focus:ring-purple-200/50"
+              disabled={isLoading}
+            />
+            <button
+              onClick={() => askQuestion(question)}
+              disabled={isLoading || !question.trim()}
+              className="rounded-full px-6 py-3 text-white font-semibold text-sm transition-all hover:scale-105 active:scale-95 disabled:opacity-40"
+              style={{ background: 'linear-gradient(135deg, #7B2D8E 0%, #E91E8C 100%)' }}
+            >
+              {isLoading ? (
+                <span className="flex items-center gap-2">
+                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Thinking...
+                </span>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4" />
+                  Ask
+                </span>
+              )}
+            </button>
+          </div>
+          
+          {/* Sample Questions */}
+          {!hasAsked && (
+            <div className="flex flex-wrap gap-2 mb-4">
+              {sampleQuestions.map((sq, i) => (
+                <button
+                  key={i}
+                  onClick={() => { setQuestion(sq); askQuestion(sq); }}
+                  className="text-xs px-3 py-1.5 rounded-full bg-purple-50 text-purple-700 hover:bg-purple-100 transition-colors"
+                >
+                  {sq}
+                </button>
+              ))}
+            </div>
           )}
-        </DialogContent>
-      </Dialog>
+          
+          {/* Answer */}
+          {hasAsked && (
+            <div className="mt-6 p-6 bg-gradient-to-r from-[#f8f4fc] to-[#fff0f7] rounded-2xl">
+              {isLoading ? (
+                <div className="flex items-center gap-3 text-gray-500">
+                  <div className="flex gap-1">
+                    <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                    <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                    <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                  </div>
+                  <span className="text-sm">Melissa is thinking...</span>
+                </div>
+              ) : (
+                <div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#7B2D8E] to-[#E91E8C] flex items-center justify-center">
+                      <span className="text-white text-xs font-bold">MJ</span>
+                    </div>
+                    <span className="text-sm font-semibold text-[#7B2D8E]">Melissa</span>
+                  </div>
+                  <p className="text-gray-700 leading-relaxed whitespace-pre-line">{answer}</p>
+                  <button
+                    onClick={() => { setQuestion(''); setAnswer(''); setHasAsked(false); }}
+                    className="mt-4 text-sm text-purple-600 hover:text-purple-800 font-medium"
+                  >
+                    Ask another question →
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+            </>
+          )}
+        </div>
+      </div>
     </section>
   );
 }
@@ -1995,6 +2189,7 @@ function App() {
       <HowItWorks />
       <Testimonials />
       <VideoGallery />
+      <AskMelissa />
       <TransferSection />
       <FAQSection />
       <QuizSection />
