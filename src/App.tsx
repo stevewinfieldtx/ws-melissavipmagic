@@ -107,7 +107,7 @@ const destinations = [
   {
     name: 'Disneyland Paris',
     description: 'Experience the magic of Disney in the heart of Europe — two enchanting parks, incredible resort hotels, and unforgettable moments.',
-    image: '/images/dest-paris.jpg'
+    image: 'https://images.unsplash.com/photo-1543340904-0d1a30c7fc65?w=1200&q=80'
   },
   {
     name: 'Adventures By Disney',
@@ -136,7 +136,7 @@ const faqs = [
   },
   {
     question: "What's included in your planning service?",
-    answer: "Everything! I handle resort recommendations and booking, dining reservations (180 days out for Disney World), Genie+ strategy, park itineraries customized to your family, special occasion celebrations, transportation advice, packing tips, and I'm available throughout your trip for any questions or changes."
+    answer: "Everything! I handle resort recommendations and booking, dining reservations (180 days out for Disney World), park itineraries customized to your family, special occasion celebrations, transportation advice, packing tips, and I'm available throughout your trip for any questions or changes."
   },
   {
     question: "Do you offer payment plans?",
@@ -160,6 +160,29 @@ const instagramPosts = [
   { image: "/images/instagram/insta-4.jpg", caption: "VIP access, insider knowledge, pure magic 🌟", link: "https://www.instagram.com/melissavipmagic/reel/DUYWdCvEUXe/" },
   { image: "/images/instagram/insta-5.jpg", caption: "Making impossible moments happen 🎉", link: "https://www.instagram.com/melissavipmagic/reel/DVRacnzEWB2/" },
   { image: "/images/instagram/insta-6.jpg", caption: "Follow along for daily Disney magic ✨", link: "https://www.instagram.com/melissavipmagic/reel/DVZQy4yEYif/" },
+];
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ─── BLOG POSTS ─────────────────────────────────────────────────────────────
+const blogPosts = [
+  {
+    title: "Disney Cruise Line Concierge: Is It Worth It?" ,
+    date: "February 2025",
+    excerpt: "After experiencing the Concierge level on multiple sailings, here is everything you need to know before you book — the perks, the access, and the honest truth.",
+    image: "/images/service-cruise.jpg"
+  },
+  {
+    title: "Walt Disney World: How to Get the Most Out of Your First Visit",
+    date: "January 2025",
+    excerpt: "First timers are always overwhelmed by the size of Walt Disney World. Here are my top insider tips for making every single hour count — from rope drop to the final fireworks.",
+    image: "/images/dest-wdw.jpg"
+  },
+  {
+    title: "Adventures by Disney: The Secret Disney Experience Most Families Never Discover",
+    date: "December 2024",
+    excerpt: "If you love Disney but want something beyond the parks, Adventures by Disney guided tours are the best-kept secret in the Disney portfolio. Here is what to expect.",
+    image: "/images/dest-adventures.jpg"
+  }
 ];
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -509,31 +532,31 @@ function HowItWorks() {
       number: '01',
       icon: MessageCircle,
       title: 'Free Consultation',
-      description: "Tell us about your dream vacation! We'll discuss your family, travel preferences, and must-do experiences."
+      description: "Tell us about your dream vacation! We discuss your family, travel style, and must-do experiences to understand exactly what will make your trip magical."
     },
     {
       number: '02',
       icon: Map,
       title: 'Custom Planning',
-      description: 'We create a personalized itinerary with resort \ cruise recommendations, dining suggestions, and a day-by-day plan.'
+      description: 'We craft a personalized itinerary with resort and cruise recommendations, dining suggestions, and a detailed day-by-day plan built around your family.'
     },
     {
       number: '03',
       icon: Calendar,
       title: 'Booking & Reservations',
-      description: 'We handle all bookings, dining reservations at earliest dates, and special requests on your behalf.'
+      description: 'We handle all bookings, dining reservations at the earliest available dates, and every special request — so you never have to navigate the system alone.'
     },
     {
       number: '04',
       icon: BookOpen,
       title: 'Pre-Trip Prep',
-      description: 'Receive helpful packing lists, tips, reminders, and everything you need for a smooth trip.'
+      description: 'We send you helpful packing lists, insider tips, reminders, and everything your family needs to feel confident and ready before you even leave home.'
     },
     {
       number: '05',
       icon: Sparkles,
       title: 'Magical Vacation',
-      description: "Enjoy your stress-free VIP vacation! We are available throughout your trip for any questions or changes."
+      description: "Enjoy your stress-free VIP vacation! We are available throughout your entire trip for any questions, adjustments, or last-minute magic."
     },
     {
       number: '06',
@@ -1293,7 +1316,7 @@ function Hero() {
             Melissa VIP Magic
           </a>
           <div className="hidden md:flex items-center gap-8">
-            {['Services', 'Destinations', 'About', 'Contact'].map((item) => (
+            {['Services', 'Destinations', 'About'].map((item) => (
               <button
                 key={item}
                 onClick={() => scrollToSection(item.toLowerCase())}
@@ -1303,6 +1326,13 @@ function Hero() {
                 {item}
               </button>
             ))}
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="nav-item bg-[#F5A623] hover:bg-[#E09512] text-white px-5 py-2 rounded-full text-sm font-semibold transition-colors"
+              aria-label="Navigate to Contact section"
+            >
+              Contact
+            </button>
           </div>
         </div>
       </nav>
@@ -1564,7 +1594,7 @@ function VideoGallery() {
               { value: '6,000+', label: 'Subscribers' },
               { value: '1,700+', label: 'Videos' },
               { value: '3.1M', label: 'Total Views' },
-              { value: '\u2665', label: 'Destination Playlists' },
+              { value: '▶', label: 'Destination Playlists' },
             ].map((stat, i) => (
               <div key={i} className="text-center">
                 <div className="text-2xl font-bold text-[#F5A623]">{stat.value}</div>
@@ -1872,14 +1902,14 @@ function About() {
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
               <img
                 src="/images/melissa-portrait.jpg"
-                alt="Melissa Jiles - Authorized Disney Vacation Planner with 13+ years experience planning magical Disney vacations for families"
+                alt="Melissa Jiles - Authorized Disney Vacation Planner with 15+ years experience planning magical Disney vacations for families"
                 className="w-full h-auto"
                 loading="lazy"
                 itemProp="image"
               />
               <meta itemProp="name" content="Melissa Jiles" />
               <meta itemProp="jobTitle" content="Authorized Disney Vacation Planner" />
-              <meta itemProp="description" content="Disney travel expert with 13+ years experience" />
+              <meta itemProp="description" content="Disney travel expert with 15+ years experience" />
               <div className="absolute inset-0 ring-4 ring-[#F5A623]/30 rounded-3xl" />
             </div>
             <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-[#F5A623] rounded-full flex items-center justify-center float-animation">
@@ -1910,10 +1940,10 @@ function About() {
             </div>
             <div className="space-y-4 text-gray-700 leading-relaxed">
               <p>
-                Understanding the unique experience and benefits of each Disney Destination is key to pairing the right vacation with the right family. Over the past thirteen years I have experienced every world-wide Disney Destination, most of them too many times to count.
+                Understanding the unique experience and benefits of each Disney Destination is key to pairing the right vacation with the right family. Over the past fifteen years I have experienced every world-wide Disney Destination, most of them too many times to count.
               </p>
               <p>
-                Using my experience, I help each of my guests select the perfect destination for their vacation and experience a bit of &quot;Disney magic&quot; anywhere they decide to adventure!
+                Using my experience, I help each of my guests select the perfect destination for their vacation and experience a bit of Disney magic anywhere they decide to adventure!
               </p>
               <p>
                 I specialize in high end Disney travel experiences. Ask me about my Concierge Services and luxury Disney experiences such as cottages, bungalows, cabanas on Castaway Cay, adding Adventures by Disney to your cruise and specialty accommodations to add a bit of pixie dust to your vacation.
@@ -2152,13 +2182,13 @@ function Footer() {
               Creating magical Disney vacations since 2010. Your trusted Authorized Disney Vacation Planner.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 bg-white/10 hover:bg-[#F5A623] rounded-full flex items-center justify-center transition-colors">
+              <a href="https://www.instagram.com/melissavipmagic/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 hover:bg-[#F5A623] rounded-full flex items-center justify-center transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 bg-white/10 hover:bg-[#F5A623] rounded-full flex items-center justify-center transition-colors">
+              <a href="https://www.facebook.com/melissavipmagic" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 hover:bg-[#F5A623] rounded-full flex items-center justify-center transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 bg-white/10 hover:bg-[#F5A623] rounded-full flex items-center justify-center transition-colors">
+              <a href="https://www.youtube.com/@MelissaVIPMagic" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 hover:bg-[#F5A623] rounded-full flex items-center justify-center transition-colors">
                 <Youtube className="w-5 h-5" />
               </a>
             </div>
@@ -2170,7 +2200,10 @@ function Footer() {
               {['Services', 'Destinations', 'About', 'Contact'].map((item) => (
                 <li key={item}>
                   <button
-                    onClick={() => document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })}
+                    onClick={() => {
+                      const id = item === 'Contact' ? 'contact' : item.toLowerCase();
+                      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+                    }}
                     className="text-white/70 hover:text-[#F5A623] transition-colors"
                   >
                     {item}
