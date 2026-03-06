@@ -1,4 +1,4 @@
-import type { ChatMessage, LeadData } from './types'
+import type { ChatMessage } from './types'
 
 // The TrueInfluence RAG endpoint — real content + real personality
 const RAG_API_URL = 'https://web-production-b295.up.railway.app/api/chat/melissavipmagic'
