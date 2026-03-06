@@ -12,9 +12,6 @@ import {
   ArrowRight, ChevronDown, Map
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { toast } from 'sonner';
 import { FloatingChat } from '@/components/chat';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -1065,41 +1062,16 @@ function QuizSection() {
 
 // Contact Form Section
 function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    destination: '',
-    travelDates: '',
-    travelers: '',
-    budget: '',
-    message: ''
-  });
   const sectionRef = useRef<HTMLDivElement>(null);
-  
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast.success('Thank you! Melissa will contact you within 24 hours to start planning your magical vacation!');
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      destination: '',
-      travelDates: '',
-      travelers: '',
-      budget: '',
-      message: ''
-    });
-  };
-  
+
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo('.contact-form',
+      gsap.fromTo('.contact-fillout',
         { y: 40, opacity: 0 },
-        { 
-          y: 0, 
-          opacity: 1, 
-          duration: 0.6, 
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -1108,144 +1080,32 @@ function ContactForm() {
         }
       );
     }, sectionRef);
-    
     return () => ctx.revert();
   }, []);
-  
+
   return (
-    <section ref={sectionRef} className="py-24 px-6 bg-gradient-to-br from-[#f8f4fc] via-white to-[#fff0f7]">
+    <section id="contact" ref={sectionRef} className="py-24 px-6 bg-gradient-to-br from-[#f8f4fc] via-white to-[#fff0f7]">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 gradient-text" style={{ fontFamily: 'Cinzel, serif' }}>
             Start the Magic
           </h2>
           <p className="text-lg text-gray-600">
-            Contact us to get started on your dream vacation
+            Tell Melissa about your dream vacation — she'll reach out within 24 hours!
           </p>
         </div>
-        
-        <form onSubmit={handleSubmit} className="contact-form bg-white rounded-3xl p-8 md:p-12 shadow-xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Your Name *</label>
-              <Input
-                required
-                value={formData.name}
-                onChange={(e) => setFormData({...formData, name: e.target.value})}
-                placeholder="John Smith"
-                className="w-full"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
-              <Input
-                required
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData({...formData, email: e.target.value})}
-                placeholder="john@example.com"
-                className="w-full"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-              <Input
-                type="tel"
-                value={formData.phone}
-                onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                placeholder="(555) 123-4567"
-                className="w-full"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Destination Interest *</label>
-              <select
-                required
-                value={formData.destination}
-                onChange={(e) => setFormData({...formData, destination: e.target.value})}
-                className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
-              >
-                <option value="">Select a destination</option>
-                <option value="wdw">Walt Disney World</option>
-                <option value="disneyland">Disneyland Resort</option>
-                <option value="cruise">Disney Cruise Line</option>
-                <option value="abd">Adventures By Disney</option>
-                <option value="aulani">Aulani Resort</option>
-                <option value="not-sure">Not Sure - Help Me Choose!</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Travel Dates (or timeframe)</label>
-              <Input
-                value={formData.travelDates}
-                onChange={(e) => setFormData({...formData, travelDates: e.target.value})}
-                placeholder="June 2024 or Flexible"
-                className="w-full"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Number of Travelers</label>
-              <Input
-                value={formData.travelers}
-                onChange={(e) => setFormData({...formData, travelers: e.target.value})}
-                placeholder="2 adults, 2 kids"
-                className="w-full"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Budget Range</label>
-              <select
-                value={formData.budget}
-                onChange={(e) => setFormData({...formData, budget: e.target.value})}
-                className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
-              >
-                <option value="">Select budget range</option>
-                <option value="economy">Economy ($3,000-$5,000)</option>
-                <option value="moderate">Moderate ($5,000-$8,000)</option>
-                <option value="deluxe">Deluxe ($8,000-$15,000)</option>
-                <option value="luxury">Luxury ($15,000+)</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Special Occasion?</label>
-              <Input
-                value={formData.message}
-                onChange={(e) => setFormData({...formData, message: e.target.value})}
-                placeholder="Birthday, Anniversary, etc."
-                className="w-full"
-              />
-            </div>
-          </div>
-          
-          <div className="mb-8">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Tell Me About Your Dream Vacation</label>
-            <Textarea
-              value={formData.message}
-              onChange={(e) => setFormData({...formData, message: e.target.value})}
-              placeholder="What are you most excited about? Any must-do experiences? Special needs or requests?"
-              className="w-full min-h-[120px]"
-            />
-          </div>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-gray-500">
-              * Required fields. Your information is never shared.
-            </p>
-            <Button 
-              type="submit"
-              className="bg-gradient-to-r from-[#7B2D8E] to-[#E91E8C] hover:opacity-90 text-white px-10 py-6 rounded-full font-semibold text-lg"
-            >
-              <Sparkles className="w-5 h-5 mr-2" />
-              Start the Magic ✨
-            </Button>
-          </div>
-        </form>
+        <div className="contact-fillout bg-white rounded-3xl shadow-xl overflow-hidden">
+          <iframe
+            src="https://forms.fillout.com/t/phtmBAoqeZus"
+            style={{ width: '100%', height: '780px', border: 'none' }}
+            title="Contact Melissa - Start Planning Your Disney Vacation"
+          />
+        </div>
       </div>
     </section>
   );
 }
 
-// Hero Section
 function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
