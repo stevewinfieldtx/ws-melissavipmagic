@@ -20,13 +20,13 @@ import { FloatingChat } from '@/components/chat';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Video data from original website
-const youtubeVideos = [
-  { id: 'cNAYhwnhZ4o', title: 'Disney Dream Concierge Lounge Tour', duration: '8:02' },
-  { id: 'x16kyarCj84', title: "Disney's Best Kept Secret", duration: '0:24' },
-  { id: 'yqRz_5VaSvA', title: 'Royal Suite Experience', duration: '0:46' },
-  { id: 'jgMFktnFiuE', title: 'Palo Brunch Review', duration: '1:30' },
+// YouTube videos — fetched dynamically; fallback shown until loaded
+const youtubeVideosFallback = [
+  { id: 'cNAYhwnhZ4o', title: 'Disney Dream Concierge Lounge Tour', duration: '' },
+  { id: 'x16kyarCj84', title: "Disney's Best Kept Secret", duration: '' },
+  { id: 'yqRz_5VaSvA', title: 'Royal Suite Experience', duration: '' },
 ];
+const YOUTUBE_CHANNEL_ID = 'UCFxAFV9JJE9yYXdKPm8Y9wQ'; // Melissa VIP Magic channel
 
 const testimonials = [
   {
@@ -63,12 +63,6 @@ const testimonials = [
 
 const services = [
   {
-    icon: Castle,
-    title: 'Disney Parks',
-    description: 'Experience the parks in ways you could only imagine! With my complimentary service, enjoy VIP treatment at every turn.',
-    image: '/images/service-parks.jpg'
-  },
-  {
     icon: Ship,
     title: 'Disney Cruise Line',
     description: 'Magic is here! Cruises are sailing to more than a dozen magical locations all over the world!',
@@ -81,14 +75,25 @@ const services = [
     image: '/images/service-adventures.jpg'
   },
   {
+    icon: Castle,
+    title: 'Disney Parks',
+    description: 'Experience the parks in ways you could only imagine! With our complimentary service, enjoy VIP treatment at every turn.',
+    image: '/images/service-parks.jpg'
+  },
+  {
     icon: Crown,
     title: 'Custom VIP Experience',
-    description: 'Red carpet experiences crafted just for you. Over ten years of creating Disney dream vacations!',
+    description: 'Red carpet experiences crafted just for you. Over fifteen years of creating Disney dream vacations!',
     image: '/images/service-vip.jpg'
   }
 ];
 
 const destinations = [
+  {
+    name: 'Disney Cruise Line',
+    description: 'Sail to magical destinations with Broadway-quality shows, themed dining, and Disney hospitality at sea.',
+    image: '/images/dest-cruise.jpg'
+  },
   {
     name: 'Walt Disney World',
     description: 'Four iconic theme parks, two water parks, 31 resort hotels, and endless magic in Orlando, Florida.',
@@ -100,9 +105,9 @@ const destinations = [
     image: '/images/dest-disneyland.jpg'
   },
   {
-    name: 'Disney Cruise Line',
-    description: 'Sail to magical destinations with Broadway-quality shows, themed dining, and Disney hospitality at sea.',
-    image: '/images/dest-cruise.jpg'
+    name: 'Disneyland Paris',
+    description: 'Experience the magic of Disney in the heart of Europe — two enchanting parks, incredible resort hotels, and unforgettable moments.',
+    image: '/images/dest-paris.jpg'
   },
   {
     name: 'Adventures By Disney',
@@ -143,35 +148,20 @@ const faqs = [
   }
 ];
 
-const blogPosts = [
-  {
-    title: "5 Hidden Gems at Magic Kingdom Most People Miss",
-    excerpt: "Discover the secret spots and lesser-known attractions that will make your Magic Kingdom visit truly magical...",
-    image: "/images/service-parks.jpg",
-    date: "January 15, 2024"
-  },
-  {
-    title: "Disney Cruise Line First-Timer's Complete Guide",
-    excerpt: "Everything you need to know before your first Disney cruise - from embarkation to Castaway Cay...",
-    image: "/images/service-cruise.jpg",
-    date: "January 8, 2024"
-  },
-  {
-    title: "Best Times to Visit Disney World in 2024",
-    excerpt: "Crowd calendars, weather patterns, and special events to help you plan the perfect trip...",
-    image: "/images/dest-wdw.jpg",
-    date: "December 28, 2023"
-  }
-];
 
+
+// ─── INSTAGRAM PHOTOS ───────────────────────────────────────────────────────
+// When Melissa sends real photos, drop them in /public/images/instagram/
+// and update the paths below. Caption is optional (shows on hover).
 const instagramPosts = [
-  { image: "/images/service-parks.jpg", likes: 234 },
-  { image: "/images/service-cruise.jpg", likes: 189 },
-  { image: "/images/service-adventures.jpg", likes: 312 },
-  { image: "/images/service-vip.jpg", likes: 267 },
-  { image: "/images/dest-wdw.jpg", likes: 456 },
-  { image: "/images/dest-disneyland.jpg", likes: 398 },
+  { image: "/images/instagram/insta-1.jpg", caption: "Concierge-level magic starts here ✨", link: "https://www.instagram.com/melissavipmagic/reel/DUtYO0ukR7r/" },
+  { image: "/images/instagram/insta-2.jpg", caption: "Your Disney dream, perfectly planned 🏰", link: "https://www.instagram.com/melissavipmagic/reel/DVHIOeIESUg/" },
+  { image: "/images/instagram/insta-3.jpg", caption: "Every detail handled, every memory made 💫", link: "https://www.instagram.com/melissavipmagic/p/DIb7AUDOgZJ/" },
+  { image: "/images/instagram/insta-4.jpg", caption: "VIP access, insider knowledge, pure magic 🌟", link: "https://www.instagram.com/melissavipmagic/reel/DUYWdCvEUXe/" },
+  { image: "/images/instagram/insta-5.jpg", caption: "Making impossible moments happen 🎉", link: "https://www.instagram.com/melissavipmagic/reel/DVRacnzEWB2/" },
+  { image: "/images/instagram/insta-6.jpg", caption: "Follow along for daily Disney magic ✨", link: "https://www.instagram.com/melissavipmagic/reel/DVZQy4yEYif/" },
 ];
+// ─────────────────────────────────────────────────────────────────────────────
 
 const quizQuestions = [
   {
@@ -335,14 +325,19 @@ function TopBar() {
     <div className="bg-[#4A148C] text-white py-2 px-4 text-sm">
       <div className="max-w-7xl mx-auto flex flex-wrap justify-center md:justify-between items-center gap-2">
         <div className="flex items-center gap-6">
-          <a href="mailto:melissa@melissavipmagic.com" className="flex items-center gap-2 hover:text-[#F5A623] transition-colors">
-            <Mail className="w-4 h-4" />
-            <span className="hidden sm:inline">melissa@melissavipmagic.com</span>
-          </a>
-          <span className="hidden md:flex items-center gap-2">
+          <button
+            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            className="flex items-center gap-2 hover:text-[#F5A623] transition-colors font-semibold"
+          >
             <PhoneCall className="w-4 h-4" />
-            <span>Contact via email for phone consultation</span>
-          </span>
+            Contact Melissa
+          </button>
+          <button
+            onClick={() => document.getElementById('transfer')?.scrollIntoView({ behavior: 'smooth' })}
+            className="hidden md:flex items-center gap-2 hover:text-[#F5A623] transition-colors underline underline-offset-2"
+          >
+            Transfer Your Cruise
+          </button>
         </div>
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-2 text-[#F5A623]">
@@ -381,10 +376,10 @@ function StatsSection() {
   }, []);
   
   const stats = [
-    { icon: Calendar, value: 13, suffix: '+', label: 'Years Experience' },
+    { icon: Calendar, value: 15, suffix: '+', label: 'Years Experience' },
     { icon: Users, value: 2500, suffix: '+', label: 'Families Helped' },
-    { icon: Heart, value: 5000, suffix: '+', label: 'Vacations Booked' },
-    { icon: Star, value: 100, suffix: '%', label: 'Satisfaction Rate' },
+    { icon: Heart, value: 5000, suffix: '+', label: 'Vacations Planned' },
+    { icon: Star, value: 99, suffix: '%', label: '5-Star Positive Rate' },
   ];
   
   return (
@@ -437,19 +432,19 @@ function WhyChooseMelissa() {
     {
       icon: Award,
       title: 'Authorized Disney Expert',
-      description: 'Official Disney Vacation Planner with Diamond Earmarked status. I have direct access to Disney and extensive training on all Disney destinations.',
+      description: 'Official Disney Vacation Planner with Diamond Earmarked status. Recognized across the industry as THE Disney Concierge Expert!',
       color: 'from-[#7B2D8E] to-[#9B59B6]'
     },
     {
       icon: Heart,
       title: 'Personalized Service',
-      description: 'Every itinerary is custom-crafted for YOUR family. I take time to understand your preferences, budget, and dreams to create the perfect vacation.',
+      description: 'Every itinerary is built around how YOU love to travel — we craft the perfect luxury vacation for your family.',
       color: 'from-[#E91E8C] to-[#F8BBD9]'
     },
     {
       icon: Gift,
       title: '100% Free Service',
-      description: "You never pay a planning fee. Disney compensates me, so you get expert planning at absolutely no additional cost to you. It's a win-win!",
+      description: 'You never pay a planning fee for a qualified trip. You get our expert VIP expertise at absolutely no additional cost to you.',
       color: 'from-[#F5A623] to-[#FFD700]'
     }
   ];
@@ -462,7 +457,7 @@ function WhyChooseMelissa() {
             Why Choose Melissa?
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Experience the difference of working with a true Disney expert
+            Experience the difference working with a luxury travel expert
           </p>
         </div>
         
@@ -514,37 +509,37 @@ function HowItWorks() {
       number: '01',
       icon: MessageCircle,
       title: 'Free Consultation',
-      description: "Tell me about your dream vacation! We'll discuss your family, preferences, budget, and must-do experiences."
+      description: "Tell us about your dream vacation! We'll discuss your family, travel preferences, and must-do experiences."
     },
     {
       number: '02',
       icon: Map,
       title: 'Custom Planning',
-      description: "I'll create a personalized itinerary with resort recommendations, dining suggestions, and a day-by-day plan."
+      description: 'We create a personalized itinerary with resort \ cruise recommendations, dining suggestions, and a day-by-day plan.'
     },
     {
       number: '03',
       icon: Calendar,
       title: 'Booking & Reservations',
-      description: "I handle all bookings, dining reservations (180 days out!), and special requests on your behalf."
+      description: 'We handle all bookings, dining reservations at earliest dates, and special requests on your behalf.'
     },
     {
       number: '04',
       icon: BookOpen,
       title: 'Pre-Trip Prep',
-      description: "Receive packing lists, park tips, Genie+ strategy, and everything you need for a smooth trip."
+      description: 'Receive helpful packing lists, tips, reminders, and everything you need for a smooth trip.'
     },
     {
       number: '05',
       icon: Sparkles,
       title: 'Magical Vacation',
-      description: "Enjoy your stress-free Disney vacation! I'm available throughout your trip for any questions or changes."
+      description: "Enjoy your stress-free VIP vacation! We are available throughout your trip for any questions or changes."
     },
     {
       number: '06',
       icon: Camera,
       title: 'Share Your Story',
-      description: "Come back and share your magical memories! I'd love to hear about your adventure and plan your next one."
+      description: "Come back and share your magical memories! I'd love to hear about your adventure and start dreaming about your next one."
     }
   ];
   
@@ -679,7 +674,7 @@ function TransferSection() {
   }, []);
   
   return (
-    <section ref={sectionRef} className="py-24 px-6 bg-gradient-to-br from-[#2D388E] to-[#7B2D8E]">
+    <section id="transfer" ref={sectionRef} className="py-24 px-6 bg-gradient-to-br from-[#2D388E] to-[#7B2D8E]">
       <div className="max-w-4xl mx-auto">
         <div className="transfer-content bg-white rounded-3xl p-8 md:p-12 shadow-2xl">
           <div className="flex flex-col md:flex-row items-center gap-8">
@@ -848,26 +843,31 @@ function InstagramSection() {
         
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {instagramPosts.map((post, index) => (
-            <div key={index} className="insta-card group relative aspect-square rounded-xl overflow-hidden cursor-pointer" role="img" aria-label={`Instagram photo from Disney vacation - ${post.likes} likes`}>
+            <a key={index} href={post.link} target="_blank" rel="noopener noreferrer" className="insta-card group relative aspect-square rounded-xl overflow-hidden cursor-pointer bg-gradient-to-br from-[#f8f4fc] to-[#fff0f7]" aria-label={`Instagram photo ${index + 1} from Melissa VIP Magic`}>
               <img 
                 src={post.image} 
-                alt={`Instagram photo ${index + 1} from Melissa VIP Magic's Disney vacation gallery - ${post.likes} likes`}
+                alt={post.caption || `Disney vacation memory ${index + 1} from Melissa VIP Magic`}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 loading="lazy"
+                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
               />
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <div className="text-white flex items-center gap-1">
-                  <Heart className="w-5 h-5 fill-white" />
-                  <span>{post.likes}</span>
+              {post.caption && (
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-2">
+                  <p className="text-white text-xs text-center leading-snug">{post.caption}</p>
                 </div>
-              </div>
-            </div>
+              )}
+              {!post.caption && (
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <Instagram className="w-6 h-6 text-white" />
+                </div>
+              )}
+            </a>
           ))}
         </div>
         
         <div className="text-center mt-8">
           <Button 
-            onClick={() => toast.info('Follow @melissavipmagic on Instagram for daily Disney magic!')}
+            onClick={() => window.open('https://www.instagram.com/melissavipmagic/', '_blank')}
             className="bg-gradient-to-r from-[#833AB4] via-[#E1306C] to-[#F77737] text-white px-8 py-6 rounded-full font-semibold"
           >
             <Instagram className="w-5 h-5 mr-2" />
@@ -1095,10 +1095,10 @@ function ContactForm() {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 gradient-text" style={{ fontFamily: 'Cinzel, serif' }}>
-            Get Your Free Quote
+            Start the Magic
           </h2>
           <p className="text-lg text-gray-600">
-            Tell me about your dream vacation and I'll create a custom plan just for you
+            Contact us to get started on your dream vacation
           </p>
         </div>
         
@@ -1214,7 +1214,7 @@ function ContactForm() {
               className="bg-gradient-to-r from-[#7B2D8E] to-[#E91E8C] hover:opacity-90 text-white px-10 py-6 rounded-full font-semibold text-lg"
             >
               <Sparkles className="w-5 h-5 mr-2" />
-              Get My Free Quote
+              Start the Magic ✨
             </Button>
           </div>
         </form>
@@ -1293,7 +1293,7 @@ function Hero() {
             Melissa VIP Magic
           </a>
           <div className="hidden md:flex items-center gap-8">
-            {['Home', 'Services', 'Destinations', 'About', 'Contact'].map((item) => (
+            {['Services', 'Destinations', 'About', 'Contact'].map((item) => (
               <button
                 key={item}
                 onClick={() => scrollToSection(item.toLowerCase())}
@@ -1315,10 +1315,10 @@ function Hero() {
           ))}
         </h1>
         <p className="hero-subtitle text-xl md:text-2xl text-white/90 text-center max-w-2xl mb-10" itemProp="description">
-          Your Dream Disney Vacation, Perfectly Planned
+          Travel Like a VIP — Concierge Planning for Cruises, Adventures, Parks &amp; More
         </p>
         <Button 
-          onClick={() => scrollToSection('services')}
+          onClick={() => scrollToSection('contact')}
           className="hero-cta bg-[#F5A623] hover:bg-[#E09512] text-white px-8 py-6 text-lg font-semibold rounded-full magic-glow-pulse"
           aria-label="Start planning your Disney vacation adventure"
         >
@@ -1503,8 +1503,32 @@ function Testimonials() {
 
 // Video Gallery Section — Featured hero + sidebar
 function VideoGallery() {
-  const [activeVideo, setActiveVideo] = useState(youtubeVideos[0]);
+  const [youtubeVideos, setYoutubeVideos] = useState(youtubeVideosFallback);
+  const [activeVideo, setActiveVideo] = useState(youtubeVideosFallback[0]);
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Fetch the last 3 videos from Melissa's YouTube channel via RSS (no API key needed)
+  useEffect(() => {
+    const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${YOUTUBE_CHANNEL_ID}`;
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
+    fetch(proxyUrl)
+      .then(r => r.json())
+      .then(data => {
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(data.contents, 'text/xml');
+        const entries = Array.from(xml.querySelectorAll('entry')).slice(0, 3);
+        const videos = entries.map(e => ({
+          id: e.querySelector('videoId')?.textContent || '',
+          title: e.querySelector('title')?.textContent || '',
+          duration: ''
+        })).filter(v => v.id);
+        if (videos.length >= 1) {
+          setYoutubeVideos(videos);
+          setActiveVideo(videos[0]);
+        }
+      })
+      .catch(() => { /* keep fallback */ });
+  }, []);
   
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -1531,9 +1555,23 @@ function VideoGallery() {
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4" style={{ fontFamily: 'Cinzel, serif' }}>
             See the Magic
           </h2>
-          <p className="text-lg text-white/70">
+          <p className="text-lg text-white/70 mb-6">
             Real tours, real reviews, real Disney experiences
           </p>
+          {/* YouTube Channel Stats */}
+          <div className="flex flex-wrap justify-center gap-6 text-white">
+            {[
+              { value: '6,000+', label: 'Subscribers' },
+              { value: '1,700+', label: 'Videos' },
+              { value: '3.1M', label: 'Total Views' },
+              { value: '\u2665', label: 'Destination Playlists' },
+            ].map((stat, i) => (
+              <div key={i} className="text-center">
+                <div className="text-2xl font-bold text-[#F5A623]">{stat.value}</div>
+                <div className="text-xs text-white/60 uppercase tracking-wider">{stat.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
         
         <div className="flex flex-col lg:flex-row gap-6">
@@ -1594,7 +1632,7 @@ function VideoGallery() {
               className="flex-shrink-0 flex items-center justify-center gap-2 p-3 rounded-xl bg-red-600 hover:bg-red-700 transition-colors text-white font-semibold text-sm"
             >
               <Youtube className="w-5 h-5" />
-              Watch More on YouTube
+              ⭐ Subscribe to Melissa's Channel
             </a>
           </div>
         </div>
@@ -1846,7 +1884,7 @@ function About() {
             </div>
             <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-[#F5A623] rounded-full flex items-center justify-center float-animation">
               <div className="text-center text-white">
-                <div className="text-3xl font-bold">13+</div>
+                <div className="text-3xl font-bold">15+</div>
                 <div className="text-xs">Years</div>
               </div>
             </div>
@@ -1856,6 +1894,20 @@ function About() {
             <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text" style={{ fontFamily: 'Cinzel, serif' }}>
               Hi, thanks for dropping by!
             </h2>
+            {/* Melissa's Backstory Video */}
+            <div className="mb-6 rounded-2xl overflow-hidden shadow-lg">
+              <div className="aspect-video">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src="https://www.youtube.com/embed/y0uqmPJH3hA"
+                  title="Melissa's Surprising Backstory: Why I love what I do!"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </div>
             <div className="space-y-4 text-gray-700 leading-relaxed">
               <p>
                 Understanding the unique experience and benefits of each Disney Destination is key to pairing the right vacation with the right family. Over the past thirteen years I have experienced every world-wide Disney Destination, most of them too many times to count.
@@ -2115,7 +2167,7 @@ function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              {['Home', 'Services', 'Destinations', 'About', 'Contact'].map((item) => (
+              {['Services', 'Destinations', 'About', 'Contact'].map((item) => (
                 <li key={item}>
                   <button
                     onClick={() => document.getElementById(item.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })}
@@ -2194,7 +2246,6 @@ function App() {
       <FAQSection />
       <QuizSection />
       <Destinations />
-      <BlogSection />
       <InstagramSection />
       <About />
       <ContactForm />
