@@ -750,7 +750,6 @@ function TransferSection() {
 }
 
 // Blog Section
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function BlogSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   
@@ -2279,6 +2278,7 @@ function App() {
       <FAQSection />
       <QuizSection />
       <Destinations />
+      <BlogSection />
       <InstagramSection />
       <About />
       <ContactForm />
