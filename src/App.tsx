@@ -1900,7 +1900,7 @@ function About() {
           <div className="about-photo relative" itemScope itemType="https://schema.org/Person">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
               <img
-                src="/images/melissa-portrait.jpg"
+                src="/images/MelissaJiles.jpg"
                 alt="Melissa Jiles - Authorized Disney Vacation Planner with 15+ years experience planning magical Disney vacations for families"
                 className="w-full h-auto"
                 loading="lazy"
@@ -2287,7 +2287,7 @@ function App() {
       <FloatingChat
         guideName="Melissa Jiles"
         guideTitle="Disney VIP Travel Expert"
-        guideAvatar="/images/melissa-portrait.jpg"
+        guideAvatar="/images/MelissaJiles.jpg"
         primaryColor="#7B2D8E"
         secondaryColor="#E91E8C"
         accentColor="#F5A623"
