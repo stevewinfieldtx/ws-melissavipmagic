@@ -12,6 +12,9 @@ import {
   ArrowRight, ChevronDown, Map
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { toast } from 'sonner';
 import { FloatingChat } from '@/components/chat';
 
 gsap.registerPlugin(ScrollTrigger);
