@@ -62,26 +62,26 @@ const testimonials = [
 const services = [
   {
     icon: Ship,
-    title: 'Disney Cruise Line',
-    description: 'Magic is here! Cruises are sailing to more than a dozen magical locations all over the world!',
+    title: 'Disney Cruise Concierge',
+    description: 'Melissa is the Cruise expert specializing in Concierge level travel. With over 50 Disney Cruises, Melissa is THE cruising expert! Let her help you plan the right ship and stateroom, booking those magical excursions, and plan any pre/post night stays.',
     image: '/images/service-cruise.jpg'
   },
   {
     icon: Compass,
     title: 'Adventures By Disney',
-    description: 'Join a magnificent community who travels the world together! Your next step if you are ALL THINGS DISNEY!',
+    description: 'Melissa has travelled the world with over 25 Adventures by Disney trips. Let her help your family experience the world \u2014 Disney style!',
     image: '/images/service-adventures.jpg'
   },
   {
     icon: Castle,
     title: 'Disney Parks',
-    description: 'Experience the parks in ways you could only imagine! With our complimentary service, enjoy VIP treatment at every turn.',
+    description: 'Melissa has traveled to all 7 Disney parks around the world. Let Melissa be your guide to planning all those details from hotels, to dining, to park tickets, to Lightning lanes.',
     image: '/images/service-parks.jpg'
   },
   {
     icon: Crown,
     title: 'Custom VIP Experience',
-    description: 'Red carpet experiences crafted just for you. Over fifteen years of creating Disney dream vacations!',
+    description: 'Melissa loves to travel VIP style \u2014 from VIP guides at the parks, to Concierge on the ships, to custom bespoke add-ons all around the world, let Melissa plan your luxury vacation.',
     image: '/images/service-vip.jpg'
   }
 ];
@@ -105,7 +105,7 @@ const destinations = [
   {
     name: 'Disneyland Paris',
     description: 'Experience the magic of Disney in the heart of Europe — two enchanting parks, incredible resort hotels, and unforgettable moments.',
-    image: 'https://images.unsplash.com/photo-1543340904-0d1a30c7fc65?w=1200&q=80'
+    image: '/images/dest-disneyland-paris.jpeg'
   },
   {
     name: 'Adventures By Disney',
@@ -135,10 +135,6 @@ const faqs = [
   {
     question: "What's included in your planning service?",
     answer: "Everything! I handle resort recommendations and booking, dining reservations (180 days out for Disney World), park itineraries customized to your family, special occasion celebrations, transportation advice, packing tips, and I'm available throughout your trip for any questions or changes."
-  },
-  {
-    question: "Do you offer payment plans?",
-    answer: "Disney offers flexible payment options! For Walt Disney World and Disneyland packages, you only need a $200 deposit to secure your reservation, with the final payment due 30 days before arrival. Disney Cruise Line requires a deposit at booking with final payment typically 90 days before sailing. I'll help you understand all payment options!"
   },
   {
     question: "Can you help with special dietary needs or celebrations?",
@@ -459,7 +455,7 @@ function WhyChooseMelissa() {
     {
       icon: Heart,
       title: 'Personalized Service',
-      description: 'Every itinerary is built around how YOU love to travel — we craft the perfect luxury vacation for your family.',
+      description: 'Every itinerary is built around how YOU love to travel — we work to create the perfect luxury vacation for your family.',
       color: 'from-[#E91E8C] to-[#F8BBD9]'
     },
     {
@@ -530,31 +526,31 @@ function HowItWorks() {
       number: '01',
       icon: MessageCircle,
       title: 'Free Consultation',
-      description: "Tell us about your dream vacation! We discuss your family, travel style, and must-do experiences to understand exactly what will make your trip magical."
+      description: "Tell us about your dream vacation! We'll discuss your family, travel preferences, and must-do experiences."
     },
     {
       number: '02',
       icon: Map,
       title: 'Custom Planning',
-      description: 'We craft a personalized itinerary with resort and cruise recommendations, dining suggestions, and a detailed day-by-day plan built around your family.'
+      description: 'We create a personalized itinerary with resort and cruise recommendations, dining suggestions, and a day-by-day plan.'
     },
     {
       number: '03',
       icon: Calendar,
       title: 'Booking & Reservations',
-      description: 'We handle all bookings, dining reservations at the earliest available dates, and every special request — so you never have to navigate the system alone.'
+      description: 'We handle all bookings, dining reservations at earliest dates, and special requests on your behalf.'
     },
     {
       number: '04',
       icon: BookOpen,
       title: 'Pre-Trip Prep',
-      description: 'We send you helpful packing lists, insider tips, reminders, and everything your family needs to feel confident and ready before you even leave home.'
+      description: 'Receive helpful packing lists, tips, reminders, and everything you need for a smooth trip.'
     },
     {
       number: '05',
       icon: Sparkles,
       title: 'Magical Vacation',
-      description: "Enjoy your stress-free VIP vacation! We are available throughout your entire trip for any questions, adjustments, or last-minute magic."
+      description: "Enjoy your stress-free VIP vacation! We are available throughout your trip for any questions or changes."
     },
     {
       number: '06',
@@ -709,7 +705,7 @@ function TransferSection() {
               </h2>
               <p className="text-gray-600 mb-6 leading-relaxed">
                 If you booked your Disney vacation directly with Disney within the last 30 days, 
-                I can transfer your reservation to my agency at <strong>absolutely no cost to you</strong>.
+                and you have not made final payment, I can transfer your reservation to my care at <strong>absolutely no cost to you</strong>.
               </p>
               <ul className="space-y-3 mb-8">
                 {[
@@ -1093,7 +1089,7 @@ function ContactForm() {
             Start the Magic
           </h2>
           <p className="text-lg text-gray-600">
-            Tell Melissa about your dream vacation — she'll reach out within 24 hours!
+            Tell Melissa about your dream vacation — we will reach out within 24 hours!
           </p>
         </div>
         <div className="contact-fillout bg-white rounded-3xl shadow-xl overflow-hidden">
@@ -1170,7 +1166,7 @@ function Hero() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <a 
             href="#" 
-            className="text-white font-bold text-xl" 
+            className="text-purple-300 font-bold text-xl" 
             style={{ fontFamily: 'Cinzel, serif' }}
             aria-label="Melissa VIP Magic - Home"
           >
@@ -1756,7 +1752,7 @@ function About() {
   }, []);
   
   return (
-    <section id="about" ref={sectionRef} className="py-24 px-6 bg-white">
+    <section id="about" ref={sectionRef} className="py-24 px-6 bg-gradient-to-br from-[#f8f4fc] via-white to-[#fff0f7]">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="about-photo relative" itemScope itemType="https://schema.org/Person">
@@ -1782,8 +1778,8 @@ function About() {
           </div>
           
           <div className="about-content">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text" style={{ fontFamily: 'Cinzel, serif' }}>
-              Hi, thanks for dropping by!
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text text-center" style={{ fontFamily: 'Cinzel, serif' }}>
+              Learn More About Melissa
             </h2>
             {/* Melissa's Backstory Video */}
             <div className="mb-6 rounded-2xl overflow-hidden shadow-lg">
@@ -1801,16 +1797,16 @@ function About() {
             </div>
             <div className="space-y-4 text-gray-700 leading-relaxed">
               <p>
-                Understanding the unique experience and benefits of each Disney Destination is key to pairing the right vacation with the right family. Over the past fifteen years I have experienced every world-wide Disney Destination, most of them too many times to count.
+                Disney has been a huge part of my family's story for years — from our first magical trips to countless adventures since. That's why my true passion is helping new families (and seasoned ones too!) create their perfect, stress-free Disney vacation filled with wonder and memories that last a lifetime.
               </p>
               <p>
-                Using my experience, I help each of my guests select the perfect destination for their vacation and experience a bit of Disney magic anywhere they decide to adventure!
+                I specialize in all things VIP at Disney: from exclusive Concierge staterooms and suites on Disney Cruise Line, to private cabanas on Castaway Cay, luxury cottages and bungalows at the resorts, Club Level accommodations in the parks, and elevating your trip with Adventures by Disney. If you've never experienced Disney at the VIP level — or if you want to take your next vacation to the next magical tier — let's talk! I'll show you how these elevated touches add that extra pixie dust without the hassle.
               </p>
               <p>
-                I specialize in high end Disney travel experiences. Ask me about my Concierge Services and luxury Disney experiences such as cottages, bungalows, cabanas on Castaway Cay, adding Adventures by Disney to your cruise and specialty accommodations to add a bit of pixie dust to your vacation.
+                As a fully licensed Travel Professional with <a href="https://crazyimaginationtravel.com/melissa" target="_blank" rel="noopener noreferrer" className="text-[#7B2D8E] font-semibold hover:underline">Crazy Imagination Travel</a> — an Authorized Disney Vacation Planner and a top-tier agency recognized by Disney for our expertise and dedication — my team and I focus on Disney destinations every single day. We handle the details so you don't have to: securing hard-to-get reservations, crafting personalized itineraries, tracking payments and deadlines, and providing insider tips you won't find anywhere else.
               </p>
               <p>
-                I am a fully licensed Travel Professional with <a href="https://crazyimaginationtravel.com/melissa" target="_blank" rel="noopener noreferrer" className="text-[#7B2D8E] font-semibold hover:underline">Crazy Imagination Travel</a>, an Authorized Disney Vacation Planner and top tier Travel Agency recognized by Disney.
+                Let a professional VIP expert turn your Disney dreams into reality. I can't wait to start the magic with your family — reach out today!
               </p>
             </div>
             <Button 
@@ -2036,11 +2032,14 @@ function Footer() {
       <div className="footer-content max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           <div>
-            <h3 className="text-2xl font-bold mb-4" style={{ fontFamily: 'Cinzel, serif' }}>
-              Melissa VIP Magic
-            </h3>
+            <div className="flex items-center gap-3 mb-4">
+              <img src="/images/melissa-icon.jpeg" alt="Melissa VIP Magic" className="w-12 h-12 rounded-full" />
+              <h3 className="text-2xl font-bold" style={{ fontFamily: 'Cinzel, serif' }}>
+                Melissa VIP Magic
+              </h3>
+            </div>
             <p className="text-white/70 mb-6">
-              Creating magical Disney vacations since 2010. Your trusted Authorized Disney Vacation Planner.
+              Creating magical Disney vacations since 2011. Your trusted Authorized Disney Vacation Planner.
             </p>
             <div className="flex gap-4">
               <a href="https://www.instagram.com/melissavipmagic/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 hover:bg-[#F5A623] rounded-full flex items-center justify-center transition-colors">
@@ -2081,42 +2080,22 @@ function Footer() {
                 <Mail className="w-5 h-5 text-[#F5A623]" />
                 <span>melissa@melissavipmagic.com</span>
               </div>
-              <div className="flex items-center gap-3 text-white/70">
-                <Phone className="w-5 h-5 text-[#F5A623]" />
-                <span>Contact via email</span>
-              </div>
+
               <div className="flex items-center gap-3 text-white/70">
                 <MapPin className="w-5 h-5 text-[#F5A623]" />
                 <span>Authorized Disney Vacation Planner</span>
               </div>
             </div>
             
-            <form onSubmit={handleSubscribe}>
-              <p className="text-sm text-white/70 mb-3">Get the latest travel tips & insider secrets</p>
-              <div className="flex gap-2">
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
-                />
-                <Button type="submit" className="bg-[#F5A623] hover:bg-[#E09512] px-4">
-                  <Send className="w-4 h-4" />
-                </Button>
-              </div>
-            </form>
+
           </div>
         </div>
         
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-white/50 text-sm">
-            © 2024 Melissa VIP Magic. All rights reserved.
+            © Melissa VIP Magic. All rights reserved.
           </p>
-          <div className="flex gap-6 text-sm">
-            <a href="#" className="text-white/50 hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="text-white/50 hover:text-white transition-colors">Terms of Service</a>
-          </div>
+
         </div>
       </div>
     </footer>
@@ -2135,13 +2114,10 @@ function App() {
       <HowItWorks />
       <Testimonials />
       <VideoGallery />
-      <AskMelissa />
       <TransferSection />
       <FAQSection />
-      <QuizSection />
       <Destinations />
-      <BlogSection />
-      <InstagramSection />
+      <QuizSection />
       <About />
       <ContactForm />
       <CTA />
