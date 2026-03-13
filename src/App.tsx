@@ -4,16 +4,16 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { 
   Castle, Ship, Compass, Crown, 
   Play, ChevronLeft, ChevronRight, 
-  Star, Sparkles, Mail, Phone, MapPin,
-  Instagram, Facebook, Youtube, Send,
+  Star, Sparkles, Mail, MapPin,
+  Instagram, Facebook, Youtube,
   Check, Calendar, Users, Heart,
   Award, Gift, MessageCircle,
   BookOpen, Camera, PhoneCall,
   ArrowRight, ChevronDown, Map
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { toast } from 'sonner';
+// import { Input } from '@/components/ui/input';
+// import { toast } from 'sonner';
 import { FloatingChat } from '@/components/chat';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -745,6 +745,7 @@ function TransferSection() {
 }
 
 // Blog Section
+// @ts-ignore: Temporarily unused - will restore when blog content is ready
 function BlogSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   
@@ -818,6 +819,7 @@ function BlogSection() {
 }
 
 // Instagram Feed Section
+// @ts-ignore: Temporarily unused - will restore when Instagram is ready
 function InstagramSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   
@@ -1529,6 +1531,7 @@ function VideoGallery() {
 }
 
 // Ask Melissa Q&A Section
+// @ts-ignore: Temporarily unused - will restore later
 function AskMelissa() {
   const [question, setQuestion] = useState('');
   const [email, setEmail] = useState('');
@@ -1995,16 +1998,7 @@ function CTA() {
 
 // Footer
 function Footer() {
-  const [email, setEmail] = useState('');
   const footerRef = useRef<HTMLDivElement>(null);
-  
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      toast.success('Thank you for subscribing! You\'ll receive magical travel tips soon.');
-      setEmail('');
-    }
-  };
   
   useEffect(() => {
     const ctx = gsap.context(() => {
